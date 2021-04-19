@@ -1,0 +1,20 @@
+{
+   "dataSources": {
+      "disabled": [ ],
+      "enabled": [ ]
+   },
+   "description": "A module for demo",
+   "email": "someone@email.com",
+   "name": "demo-module",
+   "platformHealthOnly": false,
+   "platformHealthOnlyShowOverride": false,
+   "providerSettings": {
+      "aws": {
+         "useAmiBlockDeviceMappings": false
+      },
+      "gce": {
+         "associatePublicIpAddress": false
+      }
+   },
+   "trafficGuards": [ ]
+}

@@ -1,0 +1,38 @@
+import argparse
+import json
+import logging
+
+from kubespin.build import build
+from kubespin.manifest import read_application_from_file
+
+
+parser = argparse.ArgumentParser("kubespin")
+
+parser.add_argument("manifest", help="The application manifest to process.")
+parser.add_argument(
+    "-t",
+    "--template_path",
+    type=str,
+    default="./templates/",
+    help="The path containing the templates for building. Default is ./templates",
+)
+parser.add_argument(
+    "-o",
+    "--output_path",
+    type=str,
+    default="./output/",
+    help="The path where to output the generated files. Default is ./output",
+)
+parser.add_argument(
+    "-v",
+    "--verbose",
+    action="store_true",
+    help="Prints additional (verbose) information during build",
+)
+
+args = parser.parse_args()
+
+logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO)
+
+application = read_application_from_file(args.manifest)
+build(application, args.template_path, args.output_path)
