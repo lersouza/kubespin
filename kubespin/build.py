@@ -43,6 +43,8 @@ def build_context_for_pipeline(module: Module, pipeline: Pipeline):
 
 
 def output_asset(asset: str, filename: str, target_dir: str):
+    os.makedirs(target_dir, exist_ok=True)  # Ensure build folder is there
+
     with open(os.path.join(target_dir, filename), "w+", encoding="utf-8") as target:
         target.write(asset)
 
