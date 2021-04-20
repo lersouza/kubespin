@@ -1,0 +1,125 @@
+{
+   "application": "demo-module",
+   "expectedArtifacts": [
+      {
+         "displayName": "demo-module-docker-image",
+         "id": "demo-module-docker-image",
+         "matchArtifact": {
+            "artifactAccount": "docker-registry",
+            "customKind": false,
+            "id": "demo-module-docker-image",
+            "kind": "docker",
+            "name": "docker.io/demo-image",
+            "type": "docker/image"
+         },
+         "useDefaultArtifact": false,
+         "usePriorArtifact": true
+      },
+      {
+         "defaultArtifact": {
+            "artifactAccount": "my-account",
+            "customKind": false,
+            "id": "demo-module-helm-chart",
+            "kind": "default.helm",
+            "name": "demo-chart",
+            "reference": "demo-chart",
+            "type": "helm/chart"
+         },
+         "displayName": "demo-module-helm-chart",
+         "id": "demo-module-helm-chart",
+         "matchArtifact": {
+            "artifactAccount": "my-account",
+            "customKind": false,
+            "id": "demo-module-helm-chart",
+            "kind": "helm",
+            "name": "demo-chart",
+            "type": "helm/chart"
+         },
+         "useDefaultArtifact": true,
+         "usePriorArtifact": true
+      }
+   ],
+   "id": "deploy-demo-module-production",
+   "keepWaitingPipelines": false,
+   "limitConcurrent": true,
+   "name": "Release PRODUCTION-Alpha",
+   "notifications": [ ],
+   "stages": [
+      {
+         "expectedArtifacts": [
+            {
+               "displayName": "demo-module-helm-chart-baked",
+               "id": "demo-module-helm-chart-baked",
+               "matchArtifact": {
+                  "artifactAccount": "embedded-artifact",
+                  "customKind": false,
+                  "id": "demo-module-helm-chart-baked",
+                  "kind": "base64",
+                  "name": "demo-module-helm-chart-baked",
+                  "type": "embedded/base64"
+               }
+            }
+         ],
+         "inject": { },
+         "inputArtifacts": [
+            {
+               "account": "helm-account",
+               "id": "demo-module-helm-chart"
+            }
+         ],
+         "name": "Bake",
+         "namespace": "production",
+         "outputName": "release",
+         "overrides": { },
+         "refId": "Bake",
+         "requisiteStageRefIds": [ ],
+         "templateRenderer": "HELM2",
+         "type": "bakeManifest"
+      },
+      {
+         "account": "spinnaker-poduction-account",
+         "cloudProvider": "kubernetes",
+         "inject": { },
+         "manifestArtifactId": "demo-module-helm-chart-baked",
+         "moniker": {
+            "app": "demo-module"
+         },
+         "name": "Deploy",
+         "refId": "Deploy",
+         "requiredArtifactIds": [
+            "demo-module-docker-image"
+         ],
+         "requisiteStageRefIds": [
+            "Bake"
+         ],
+         "skipExpressionEvaluation": true,
+         "source": "artifact",
+         "trafficManagement": {
+            "enabled": true,
+            "options": {
+               "enableTraffic": true,
+               "namespace": "production",
+               "services": [
+                  "service demo-svc"
+               ],
+               "strategy": "highlander"
+            }
+         },
+         "type": "deployManifest"
+      }
+   ],
+   "triggers": [
+      {
+         "account": "docker-io",
+         "enabled": true,
+         "expectedArtifactIds": [
+            "demo-module-docker-image"
+         ],
+         "name": "Docker Trigger",
+         "registry": "docker.io",
+         "repository": "demo-image",
+         "tag": "\\d+\\.\\d+\\.\\d+\\.",
+         "type": "docker"
+      }
+   ]
+}

@@ -19,6 +19,13 @@
             "properties": {
                 "account": "spinnaker-qa-account"
             }
+        },
+        {
+            "type": "deploy",
+            "namespace": "production",
+            "properties": {
+                "account": "spinnaker-poduction-account"
+            }
         }
     ]
 }
