@@ -19,14 +19,14 @@ You are ready to go!
 
 ## Running examples
 
-The `examples/` path contain some examples on how to take advantage of `kubespin` and `jsonnet`. To try it, run:
+The `examples/` path contains some examples on how to take advantage of `kubespin` and `jsonnet`. To try it, run:
 
 ```bash
 cd examples/
 kubespin myapps.json -t ./templates/
 ```
 
-## The Manisfest file
+## The Manifest file
 
 The manifest file is a json file that holds a declaration for your app modules and pipelines.
 
@@ -51,7 +51,7 @@ A module is a concept directly mapped to [Spinnaker's application concept](https
 ...
 ```
 
-A module is basically describe by its name, a contact for a person responsible for it and a brief description of what it does. You can also rely on `properties` to store `key-value` pairs that will be available in your jsonnet template.
+A module is basically described by its name, a contact for a person responsible for it and a brief description of what it does. You can also rely on `properties` to store `key-value` pairs that will be available in your jsonnet template.
 
 ### Pipelines
 
@@ -73,7 +73,7 @@ Pipelines describe actual pipelines that will be applied to all your modules:
 ...
 ```
 
-It is basically describe by a `type` and `namespace` attributes. The `type` holds, in simple terms, the name of the template used to render the pipeline. The `namespace` attribute refers to kubernetes namespace that the pipeline refers to (a deployment to a dev namespace, for instance). The namespace itself can be used to define other types of namespaces, such as AWS Resource Groups.
+It is basically described by a `type` and `namespace` attributes. The `type` holds, in simple terms, the name of the template used to render the pipeline. The `namespace` attribute refers to kubernetes namespace that the pipeline refers to (a deployment to a dev namespace, for instance). The namespace itself can be used to define other types of namespaces, such as AWS Resource Groups.
 
 ### The templates
 
@@ -113,7 +113,7 @@ The `default` template group can be changed at the module level by adding a `tem
 ...
 ```
 
-This way, instead of looking for templates in `default` folder, **kubespin** will look for templates in the `custom_templates` forlder for the module.
+This way, instead of looking for templates in `default` folder, **kubespin** will look for templates in the `custom_templates` folder for the module.
 
 #### Context
 
@@ -137,5 +137,3 @@ local dockerArtifact = sponnet.artifacts
 ...
 
 ```
-
-

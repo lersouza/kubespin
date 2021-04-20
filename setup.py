@@ -9,7 +9,7 @@ setup(
     license="MIT",
     scripts=["bin/kubespin"],
     include_package_data=True,
-    description="A simple to to manage Spinnaker pipelines declaratively.",
+    description="A very simple tool to manage an application's lifecycle in Spinnaker.",
     install_requires=["jsonnet"],
     setup_requires=["setuptools_scm"],
     packages=find_packages(),
